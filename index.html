@@ -211,7 +211,7 @@ a.guide:hover { box-shadow: var(--shadow-hover); transform: translateY(-3px); }
     <p class="lead" id="lead"></p>
     <div class="actions">
       <a class="btn" href="#selection">Voir la sélection</a>
-      <a class="btn ghost" href="#methode">Comment nous choisissons</a>
+      <a class="btn ghost" href="#methode">Comment je choisis</a>
     </div>
     <dl class="facts" id="facts"></dl>
   </section>
@@ -243,7 +243,7 @@ a.guide:hover { box-shadow: var(--shadow-hover); transform: translateY(-3px); }
 
   <section class="sec" id="methode">
     <div class="sec-head">
-      <h2>Notre méthode</h2>
+      <h2>Ma méthode</h2>
       <p>Ce qui décide de la présence d’un produit sur ce site.</p>
     </div>
     <div id="method"></div>
@@ -277,28 +277,51 @@ const CONFIG = {
   contactEmail: "evd.partner@proton.me",
   privacyUrl: "privacy.html",
   methodology: {
-    intro: "Nous ne vendons rien et nous ne testons pas chaque produit en laboratoire. Notre travail consiste à comparer les fiches techniques, à lire les avis détaillés des acheteurs et les tests indépendants, puis à retenir les produits qui offrent le meilleur équilibre entre qualité, prix et fiabilité. Nous touchons une commission si vous achetez par nos liens, sans frais supplémentaires pour vous.",
+    intro: "Je ne vends rien et je ne teste pas chaque produit en laboratoire. Mon travail consiste à comparer les fiches techniques, à lire les avis détaillés des acheteurs et les tests indépendants, puis à retenir les produits qui offrent le meilleur équilibre entre qualité, prix et fiabilité. Je touche une commission si vous achetez par nos liens, sans frais supplémentaires pour vous.",
     criteria: [
-      { title: "Fiche technique", text: "Nous comparons les caractéristiques qui comptent vraiment pour l'usage, pas celles qui servent surtout d'argument de vente." },
-      { title: "Avis des acheteurs", text: "Nous lisons les avis récents, y compris les critiques de 1 à 3 étoiles, pour repérer les défauts qui reviennent." },
-      { title: "Tests indépendants", text: "Quand ils existent, nous consultons les tests de sites spécialisés avant de recommander un produit." },
-      { title: "Rapport qualité-prix", text: "Nous comparons le prix aux produits équivalents. Un produit cher doit justifier la différence." },
-      { title: "Fiabilité et service", text: "Nous tenons compte de la réputation de la marque, de la garantie et de la facilité de retour." },
-      { title: "Mises à jour", text: "Nous revérifions régulièrement nos sélections. La date de la dernière vérification est indiquée en haut de la page." }
+      { title: "Fiche technique", text: "Je compare les caractéristiques qui comptent vraiment pour l'usage, pas celles qui servent surtout d'argument de vente." },
+      { title: "Avis des acheteurs", text: "Je lis les avis récents, y compris les critiques de 1 à 3 étoiles, pour repérer les défauts qui reviennent." },
+      { title: "Tests indépendants", text: "Quand ils existent, je consulte les tests de sites spécialisés avant de recommander un produit." },
+      { title: "Rapport qualité-prix", text: "Je compare le prix aux produits équivalents. Un produit cher doit justifier la différence." },
+      { title: "Fiabilité et service", text: "Je tiens compte de la réputation de la marque, de la garantie et de la facilité de retour." },
+      { title: "Mises à jour", text: "Je revérifie régulièrement nos sélections. La date de la dernière vérification est indiquée en haut de la page." }
     ]
   },  // criteria : [{ title: "", text: "" }]
-  categories: ["Réparation électronique"],              // Liste de noms de catégories
+  categories: ["Réparation électronique", "Éclairage", "Accessoires"],              // Liste de noms de catégories
   products: [{
     name: "iFixit Essential Electronics Toolkit",
     asin: "B0964G2Y7S",
     category: "Réparation électronique",
-    badge: "Notre choix",
-    verdict: "Une phrase qui résume ton avis.",
+    badge: "Mon choix",
+    verdict: "Solide et de qualité",
     forWho: "C'est parfait pour les gens qui font de la réparation (cellulaire, laptop, etc.).",
     pros: ["Excellente qualité", "Complet, même pour son prix"],
     cons: ["Ce n'est pas un kit professionel"],
-    image: "iFixit Essential Electronics Toolkit.jpg"
-  },],                // [{ name, asin, category, verdict, forWho, pros: [], cons: [], image, badge }]
+    image: "iFixit-Essential-Electronics-Toolkit.jpg"
+  },
+  {
+    name: "Gritin Lampe de lecture rechargeable 19 LED pour lire au lit",
+    asin: "B0C3BC4QG2",
+    category: "Éclairage",
+    badge: "Pour petit budget",
+    verdict: "Je l'utilise et c'est révolutionnairement pratique",
+    forWho: "Excellent pour les gens qui aiment lire au lit",
+    cons: ["..."],
+    pros: ["Bas prix", "En rabais!!!"],
+    image: "Lampe-lit.jpg"
+  },
+  {
+    name: "Anker Chargeur rapide sans fil certifié Qi 10 W",
+    asin: "B07THHQMHM",
+    category: "Accessoires",
+    badge: "",
+    verdict: "Un objet technologique et pratique",
+    forWho: "Parfait pour une clientièle paresseuse",
+    cons: ["Ne fonctionne pas avec toutes les coques"],
+    pros: ["Compatible avec n'importe quel bloc de charge"],
+    image: "anker-induction.jpg"
+  },
+  ],             // [{ name, asin, category, verdict, forWho, pros: [], cons: [], image, badge }]
   guides: [{
     title : "Quelles erreurs éviter ?",
     summary : ".",
@@ -537,7 +560,7 @@ $("footer").innerHTML = `
     <h3>Navigation</h3>
     <ul>
       <li><a href="#selection">La sélection</a></li>
-      <li><a href="#methode">Notre méthode</a></li>
+      <li><a href="#methode">Ma méthode</a></li>
       <li><a href="#apropos">À propos</a></li>
     </ul>
   </div>
