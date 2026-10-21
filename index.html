@@ -70,10 +70,6 @@ a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px soli
 .mono { font-family: var(--font-mono); }
 .label { font-family: var(--font-mono); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
 
-/* Transparence */
-.disclosure { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; margin-top: 16px; padding: 12px 18px; background: var(--accent-soft); border-radius: 14px; font-size: 0.875rem; }
-.disclosure span:last-child { min-width: 0; }
-
 /* Panneau de préparation */
 .setup { margin-top: 20px; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; box-shadow: var(--shadow); }
 .setup summary { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; padding: 18px 24px; cursor: pointer; list-style: none; font-weight: 700; font-size: 1.05rem; letter-spacing: -0.02em; }
@@ -333,9 +329,6 @@ function fmtDate(s) {
 /* ---------- En-tête, transparence, accroche ---------- */
 $("brand").innerHTML = has(C.siteName) ? esc(C.siteName) : todo("Nom du site");
 document.title = has(C.siteName) ? C.siteName : "Vitrine de recommandations";
-
-$("disclosure").innerHTML =
-  `<span class="label">Transparence</span><span>${esc(C.disclosure)}</span>`;
 
 $("eyebrow").innerHTML = has(C.niche) ? esc(C.niche) : todo("Sujet du site");
 $("headline").innerHTML = has(C.headline) ? esc(C.headline) : todo("Votre promesse en une phrase");
