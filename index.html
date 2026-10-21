@@ -1,0 +1,600 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Verdict</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<style>
+/* Mise en page : en-tête fixe, bandeau de transparence, grand panneau d'accroche clair, fiches arrondies en grille, comparatif, guides, méthode, à propos.
+   Contenu 100 % piloté par CONFIG. Ce qui manque s'affiche en « À compléter ». */
+:root {
+  --bg: #FFFFFF;
+  --surface: #FFFFFF;
+  --surface-2: #F3F6FA;
+  --tint: #F1F4FF;
+  --dot: #D9E0FB;
+  --fg: #0B1220;
+  --fg-muted: #566176;
+  --line: #E4E9F0;
+  --accent: #3355FF;
+  --accent-fg: #FFFFFF;
+  --accent-soft: #EAEFFF;
+  --minus: #C0392B;
+  --todo: #A04A00;
+  --todo-bg: #FFF6EA;
+  --todo-line: #F0B26B;
+  --todo-hatch: #FDE8CC;
+  --shadow: 0 1px 2px rgba(11, 18, 32, 0.04), 0 10px 28px rgba(11, 18, 32, 0.07);
+  --shadow-hover: 0 2px 4px rgba(11, 18, 32, 0.05), 0 16px 36px rgba(11, 18, 32, 0.12);
+  --font-display: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-body: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, Menlo, Consolas, monospace;
+  color-scheme: light;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 72px;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--bg); }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; line-height: 1.12; letter-spacing: -0.03em; }
+p { margin: 0; }
+a { color: inherit; }
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 8px; }
+.wrap { max-width: 1160px; margin: 0 auto; }
+
+/* En-tête fixe */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 24px; padding-block: 14px; background: var(--bg); border-bottom: 1px solid var(--line); }
+.brand { font-weight: 800; font-size: 1.25rem; letter-spacing: -0.03em; text-decoration: none; min-width: 0; }
+.nav { display: flex; flex-wrap: wrap; gap: 2px; font-size: 0.9rem; font-weight: 500; }
+.nav a { text-decoration: none; color: var(--fg-muted); padding: 8px 14px; border-radius: 999px; transition: color .15s, background .15s; }
+.nav a:hover { color: var(--fg); background: var(--surface-2); }
+
+/* Marqueurs « à compléter » */
+.todo { color: var(--todo); background: repeating-linear-gradient(135deg, transparent 0 7px, var(--todo-hatch) 7px 8px), var(--todo-bg); border: 1.5px dashed var(--todo-line); border-radius: 8px; padding: 2px 8px; font-size: 0.9em; font-weight: 500; line-height: 1.5; }
+.todo-block { display: block; padding: 16px 18px; border-radius: 14px; }
+.todo-block p { margin-top: 6px; font-size: 0.9rem; font-weight: 400; max-width: 70ch; }
+.todo-tag { display: inline-block; vertical-align: middle; margin-right: 8px; padding: 1px 7px; border-radius: 999px; background: var(--todo); color: var(--todo-bg); font-family: var(--font-mono); font-size: 0.66rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; line-height: 1.6; }
+.mono { font-family: var(--font-mono); }
+.label { font-family: var(--font-mono); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+
+/* Transparence */
+.disclosure { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; margin-top: 16px; padding: 12px 18px; background: var(--accent-soft); border-radius: 14px; font-size: 0.875rem; }
+.disclosure span:last-child { min-width: 0; }
+
+/* Panneau de préparation */
+.setup { margin-top: 20px; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; box-shadow: var(--shadow); }
+.setup summary { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; padding: 18px 24px; cursor: pointer; list-style: none; font-weight: 700; font-size: 1.05rem; letter-spacing: -0.02em; }
+.setup summary::-webkit-details-marker { display: none; }
+.setup summary::after { content: "Réduire"; margin-left: auto; font-family: var(--font-mono); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg-muted); }
+.setup:not([open]) summary::after { content: "Afficher"; }
+.count { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 500; color: var(--todo); background: var(--todo-bg); border: 1px solid var(--todo-line); border-radius: 999px; padding: 1px 10px; font-variant-numeric: tabular-nums; }
+.setup-body { padding: 0 24px 24px; display: grid; gap: 20px; }
+.bar { height: 8px; border-radius: 999px; background: var(--surface-2); overflow: hidden; }
+.bar i { display: block; height: 100%; border-radius: 999px; background: var(--accent); }
+.setup-body > p { font-size: 0.9rem; color: var(--fg-muted); max-width: 72ch; }
+.setup-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 24px 40px; }
+.setup h3 { font-size: 0.72rem; font-family: var(--font-mono); font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg-muted); margin-bottom: 6px; }
+.checklist { list-style: none; margin: 0; padding: 0; display: grid; }
+.checklist li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 12px; align-items: start; padding: 11px 0; border-top: 1px solid var(--line); font-size: 0.9rem; }
+.checklist li:first-child { border-top: 0; }
+.checklist .state { font-family: var(--font-mono); font-size: 0.66rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; white-space: nowrap; margin-top: 2px; }
+.state.is-todo { background: var(--todo); color: var(--todo-bg); }
+.state.is-ok { background: var(--accent-soft); color: var(--accent); }
+.state.is-check { background: var(--surface-2); color: var(--fg-muted); }
+.checklist .what { min-width: 0; }
+.checklist small { display: block; color: var(--fg-muted); font-size: 0.8rem; line-height: 1.45; margin-top: 2px; }
+.checklist code { font-family: var(--font-mono); font-size: 0.74rem; color: var(--fg-muted); overflow-wrap: anywhere; }
+.checklist li.done .what > strong { color: var(--fg-muted); font-weight: 500; }
+
+/* Accroche : grand panneau clair */
+.hero { margin-top: 24px; padding: clamp(28px, 6vw, 72px); display: grid; gap: 28px; background-color: var(--tint); background-image: radial-gradient(var(--dot) 1.2px, transparent 1.2px); background-size: 22px 22px; border-radius: 32px; border: 1px solid var(--line); scroll-margin-top: 80px; }
+.eyebrow { justify-self: start; max-width: 100%; padding: 6px 14px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); font-size: 0.82rem; font-weight: 600; color: var(--accent); }
+.hero h1 { font-size: clamp(2.3rem, 6vw, 4.4rem); font-weight: 800; max-width: 18ch; letter-spacing: -0.04em; line-height: 1.02; }
+.hero h1 .todo { font-family: var(--font-display); font-weight: 700; font-size: inherit; padding: 0.04em 0.2em; display: inline; line-height: 1.3; border-radius: 14px; }
+.hero .lead { font-size: 1.15rem; color: var(--fg-muted); max-width: 56ch; }
+.hero .lead .todo { font-size: 0.95rem; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 12px 26px; border-radius: 999px; border: 1.5px solid var(--accent); background: var(--accent); color: var(--accent-fg); font: 600 0.95rem/1.2 var(--font-body); text-decoration: none; cursor: pointer; transition: transform .15s, box-shadow .15s, background .15s; }
+.btn:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(51, 85, 255, 0.28); }
+.btn.ghost { background: var(--surface); color: var(--fg); border-color: var(--line); }
+.btn.ghost:hover { border-color: var(--fg-muted); box-shadow: none; }
+.btn.off { background: transparent; color: var(--todo); border: 1.5px dashed var(--todo-line); cursor: not-allowed; font-weight: 500; font-size: 0.86rem; text-align: center; border-radius: 14px; }
+.btn.off:hover { transform: none; box-shadow: none; }
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr)); gap: 12px; margin: 8px 0 0; }
+.facts div { min-width: 0; padding: 14px 18px; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; }
+.facts dt { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg-muted); }
+.facts dd { margin: 2px 0 0; font-weight: 700; font-variant-numeric: tabular-nums; }
+
+/* Sections */
+.sec { margin-top: 88px; scroll-margin-top: 88px; }
+.sec-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 10px 32px; margin-bottom: 28px; }
+.sec-head h2 { font-size: clamp(1.8rem, 3.6vw, 2.5rem); font-weight: 800; }
+.sec-head p { color: var(--fg-muted); font-size: 0.98rem; max-width: 52ch; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+.chip { min-height: 40px; padding: 8px 18px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--fg); font: 600 0.875rem/1.2 var(--font-body); cursor: pointer; transition: border-color .15s, background .15s, color .15s; }
+.chip:hover { border-color: var(--fg-muted); }
+.chip[aria-pressed="true"] { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); }
+
+/* Fiches produit */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr)); gap: 24px; }
+.card { display: flex; flex-direction: column; min-width: 0; padding: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 24px; box-shadow: var(--shadow); transition: box-shadow .2s, transform .2s; }
+.card:hover { box-shadow: var(--shadow-hover); transform: translateY(-3px); }
+.media { aspect-ratio: 4 / 3; max-width: 100%; background: var(--surface-2); border-radius: 16px; overflow: hidden; display: grid; place-items: center; }
+.media img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.media .todo { font-size: 0.85rem; }
+.card-body { display: flex; flex-direction: column; gap: 14px; padding: 18px 10px 10px; flex: 1; min-width: 0; }
+.card-meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 12px; align-items: center; }
+.cat { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); }
+.badge { font-size: 0.72rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; background: var(--accent); color: var(--accent-fg); }
+.card h3 { font-size: 1.35rem; font-weight: 800; overflow-wrap: anywhere; }
+.verdict { color: var(--fg); }
+.who { font-size: 0.9rem; color: var(--fg-muted); }
+.who strong { color: var(--fg); font-weight: 700; }
+.pc { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; font-size: 0.9rem; }
+.pc li { display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: 6px; }
+.pc li::before { font-family: var(--font-mono); font-weight: 500; }
+.pc.plus li::before { content: "+"; color: var(--accent); }
+.pc.minus li::before { content: "\2212"; color: var(--minus); }
+.card-foot { margin-top: auto; display: grid; gap: 8px; padding-top: 6px; }
+.asin { font-family: var(--font-mono); font-size: 0.74rem; color: var(--fg-muted); overflow-wrap: anywhere; }
+.price-note { font-size: 0.78rem; color: var(--fg-muted); text-align: center; }
+.empty { grid-column: 1 / -1; }
+
+/* Comparatif */
+.table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; box-shadow: var(--shadow); }
+table { border-collapse: collapse; width: 100%; min-width: 680px; font-size: 0.92rem; }
+th, td { text-align: left; vertical-align: top; padding: 16px 20px; border-bottom: 1px solid var(--line); }
+tr:last-child td { border-bottom: 0; }
+th { font-family: var(--font-mono); font-size: 0.68rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg-muted); background: var(--surface-2); }
+td:first-child { font-weight: 700; }
+td a.inline { color: var(--accent); font-weight: 700; text-underline-offset: 3px; white-space: nowrap; }
+
+/* Guides, méthode, à propos */
+.guides { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr)); gap: 24px; }
+.guide { display: grid; gap: 8px; align-content: start; padding: 24px; background: var(--surface); border: 1px solid var(--line); border-radius: 24px; box-shadow: var(--shadow); text-decoration: none; transition: box-shadow .2s, transform .2s; min-width: 0; }
+a.guide:hover { box-shadow: var(--shadow-hover); transform: translateY(-3px); }
+.guide h3 { font-size: 1.2rem; font-weight: 800; }
+.guide p { font-size: 0.93rem; color: var(--fg-muted); }
+.guide .go { font-weight: 700; color: var(--accent); font-size: 0.9rem; }
+.criteria { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 16px; }
+.criteria li { padding: 20px 22px; background: var(--surface-2); border-radius: 20px; min-width: 0; }
+.criteria strong { display: block; font-size: 1.05rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 4px; }
+.criteria p { font-size: 0.92rem; color: var(--fg-muted); }
+.intro { max-width: 68ch; margin-bottom: 20px; color: var(--fg-muted); }
+.about { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 24px; align-items: start; max-width: 780px; padding: 24px; background: var(--surface); border: 1px solid var(--line); border-radius: 24px; box-shadow: var(--shadow); }
+.about img { width: 96px; height: 96px; border-radius: 50%; object-fit: cover; }
+.about h3 { font-size: 1.3rem; font-weight: 800; margin-bottom: 6px; }
+.about-photo { width: 96px; height: 96px; border-radius: 50%; display: grid; place-items: center; text-align: center; font-size: 0.7rem; padding: 6px; }
+@media (max-width: 520px) { .about { grid-template-columns: minmax(0, 1fr); } }
+
+/* Pied de page */
+.foot { margin-top: 96px; padding: 32px; background: var(--surface-2); border-radius: 28px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 28px 40px; font-size: 0.875rem; color: var(--fg-muted); }
+.foot h3 { font-size: 0.7rem; font-family: var(--font-mono); font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; color: var(--fg); }
+.foot .brand { color: var(--fg); display: inline-block; margin-bottom: 8px; }
+.foot ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.foot a { color: var(--fg); text-underline-offset: 3px; }
+.foot .wide { grid-column: 1 / -1; padding-top: 20px; border-top: 1px solid var(--line); font-size: 0.8rem; }
+.email { font-family: var(--font-mono); user-select: all; overflow-wrap: anywhere; }
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="#top" id="brand"></a>
+    <nav class="nav" aria-label="Navigation principale">
+      <a href="#selection">Sélection</a>
+      <a href="#comparatif">Comparatif</a>
+      <a href="#guides">Guides</a>
+      <a href="#methode">Méthode</a>
+      <a href="#apropos">À propos</a>
+    </nav>
+  </header>
+
+  <p class="disclosure" id="disclosure"></p>
+
+  <details class="setup" id="setup" open hidden></details>
+
+  <section class="hero" id="top">
+    <p class="eyebrow" id="eyebrow"></p>
+    <h1 id="headline"></h1>
+    <p class="lead" id="lead"></p>
+    <div class="actions">
+      <a class="btn" href="#selection">Voir la sélection</a>
+      <a class="btn ghost" href="#methode">Comment nous choisissons</a>
+    </div>
+    <dl class="facts" id="facts"></dl>
+  </section>
+
+  <section class="sec" id="selection">
+    <div class="sec-head">
+      <h2>La sélection</h2>
+      <p>Chaque fiche renvoie vers la page du produit sur le site du marchand, où le prix et la disponibilité sont toujours à jour.</p>
+    </div>
+    <div class="chips" id="chips"></div>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <section class="sec" id="comparatif">
+    <div class="sec-head">
+      <h2>Comparatif rapide</h2>
+      <p>Les produits côte à côte, avec leur point fort et leur principale limite.</p>
+    </div>
+    <div id="compare"></div>
+  </section>
+
+  <section class="sec" id="guides">
+    <div class="sec-head">
+      <h2>Guides d’achat</h2>
+      <p>Les critères à connaître avant de choisir.</p>
+    </div>
+    <div class="guides" id="guideList"></div>
+  </section>
+
+  <section class="sec" id="methode">
+    <div class="sec-head">
+      <h2>Notre méthode</h2>
+      <p>Ce qui décide de la présence d’un produit sur ce site.</p>
+    </div>
+    <div id="method"></div>
+  </section>
+
+  <section class="sec" id="apropos">
+    <div class="sec-head">
+      <h2>À propos</h2>
+    </div>
+    <div id="about"></div>
+  </section>
+
+  <footer class="foot" id="footer"></footer>
+</div>
+
+<script>
+/* ============================================================
+   CONFIG : le seul bloc à remplir.
+   Laissez une valeur vide ("" ou []) tant que vous n'avez pas l'information :
+   le site affichera « À compléter » à la place, sans rien inventer.
+   ============================================================ */
+const CONFIG = {
+  marketplace: { domain: "amazon.ca", label: "Amazon.ca" },
+  affiliateTag: "verdict016-20",            // Identifiant de suivi (tracking ID) du Programme Partenaires, de type "nomdusite-20"
+  siteName: "Verdict",
+  siteUrl: "gravier.dev",
+  niche: "Site de recommandations de produits",
+  headline: "Ne choisissez plus au hasard",
+  subheadline: "Ici tu trouveras les meilleurs produits que tu peux acheter, évidemment rapport-qualité-prix",             // 1 à 2 phrases sous le titre
+  author: { name: "Édouard Viau Désiront", bio: "Je suis un travailleur autonomne qui présente des produits de la compagnie Amazon.ca, pour vous aider à mieux faire votre verdict sur vos choix d'achats!", photo: "" },
+  contactEmail: "evd.partner@proton.me",
+  privacyUrl: "privacy.html",
+  methodology: { intro: "", criteria: [] },   // criteria : [{ title: "", text: "" }]
+  categories: ["Réparation électronique"],              // Liste de noms de catégories
+  products: [{
+    name: "iFixit Essential Electronics Toolkit",
+    asin: "B0964G2Y7S",
+    category: "Réparation électronique",
+    badge: "Notre choix",
+    verdict: "Une phrase qui résume ton avis.",
+    forWho: "C'est parfait pour les gens qui font de la réparation (cellulaire, laptop, etc.).",
+    pros: ["Excellente qualité", "Complet, même pour son prix"],
+    cons: ["Ce n'est pas un kit professionel"],
+    image: "iFixit Essential Electronics Toolkit.jpg"
+  },],                // [{ name, asin, category, verdict, forWho, pros: [], cons: [], image, badge }]
+  guides: [{
+    title : "Quelles erreurs éviter ?",
+    summary : "",
+    url : "",
+  }],                  // [{ title, summary, url }]
+  lastChecked: "2026-10-21",             // Date de dernière vérification des produits, AAAA-MM-JJ
+  minProducts: 3,
+  disclosure: "En tant que Partenaire Amazon, je réalise un bénéfice sur les achats remplissant les conditions requises."
+};
+
+/* ---------- Outils ---------- */
+const $ = (id) => document.getElementById(id);
+const ESC = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
+const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ESC[c]);
+const has = (v) => typeof v === "string" && v.trim() !== "";
+const ASIN_RE = /^[A-Z0-9]{10}$/i;
+
+const todo = (text) => `<span class="todo"><span class="todo-tag">À compléter</span>${esc(text)}</span>`;
+const todoBlock = (title, hint) =>
+  `<div class="todo todo-block"><span class="todo-tag">À compléter</span><strong>${esc(title)}</strong>${hint ? `<p>${esc(hint)}</p>` : ""}</div>`;
+
+const C = CONFIG;
+const products = Array.isArray(C.products) ? C.products.filter(Boolean) : [];
+const validProducts = products.filter((p) => has(p.name) && ASIN_RE.test(p.asin || ""));
+const mk = C.marketplace;
+
+function linkFor(p) {
+  if (!has(C.affiliateTag) || !ASIN_RE.test(p.asin || "")) return "";
+  return `https://www.${mk.domain}/dp/${encodeURIComponent(p.asin.toUpperCase())}?tag=${encodeURIComponent(C.affiliateTag.trim())}`;
+}
+
+function fmtDate(s) {
+  if (!has(s)) return "";
+  const d = new Date(s + "T12:00:00");
+  return isNaN(d) ? s : d.toLocaleDateString("fr-CA", { year: "numeric", month: "long", day: "numeric" });
+}
+
+/* ---------- En-tête, transparence, accroche ---------- */
+$("brand").innerHTML = has(C.siteName) ? esc(C.siteName) : todo("Nom du site");
+document.title = has(C.siteName) ? C.siteName : "Vitrine de recommandations";
+
+$("disclosure").innerHTML =
+  `<span class="label">Transparence</span><span>${esc(C.disclosure)}</span>`;
+
+$("eyebrow").innerHTML = has(C.niche) ? esc(C.niche) : todo("Sujet du site");
+$("headline").innerHTML = has(C.headline) ? esc(C.headline) : todo("Votre promesse en une phrase");
+$("lead").innerHTML = has(C.subheadline) ? esc(C.subheadline) : todo("1 à 2 phrases pour expliquer ce que le lecteur trouvera ici");
+
+$("facts").innerHTML = `
+  <div><dt>Boutique</dt><dd>${esc(mk.label)}</dd></div>
+  <div><dt>Produits sélectionnés</dt><dd>${validProducts.length}</dd></div>
+  <div><dt>Dernière vérification</dt><dd>${has(C.lastChecked) ? esc(fmtDate(C.lastChecked)) : todo("Date")}</dd></div>`;
+
+/* ---------- Sélection ---------- */
+function productCard(p) {
+  const href = linkFor(p);
+  const media = has(p.image)
+    ? `<img src="${esc(p.image)}" alt="${esc(p.name)}" loading="lazy">`
+    : todo("Photo du produit");
+  const pros = Array.isArray(p.pros) && p.pros.length
+    ? `<ul class="pc plus">${p.pros.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>` : todo("Points forts");
+  const cons = Array.isArray(p.cons) && p.cons.length
+    ? `<ul class="pc minus">${p.cons.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>` : todo("Limites");
+  const cta = href
+    ? `<a class="btn" href="${esc(href)}" target="_blank" rel="sponsored nofollow noopener">Voir sur ${esc(mk.label)}</a>`
+    : `<span class="btn off" aria-disabled="true">Lien désactivé : ${!has(C.affiliateTag) ? "identifiant Partenaires manquant" : "ASIN manquant ou invalide"}</span>`;
+  return `
+  <article class="card" data-cat="${esc(p.category || "")}">
+    <div class="media">${media}</div>
+    <div class="card-body">
+      <div class="card-meta">
+        <span class="cat">${has(p.category) ? esc(p.category) : "Catégorie"}</span>
+        ${has(p.badge) ? `<span class="badge">${esc(p.badge)}</span>` : ""}
+      </div>
+      <h3>${esc(p.name)}</h3>
+      <p class="verdict">${has(p.verdict) ? esc(p.verdict) : todo("Verdict en une phrase")}</p>
+      <p class="who"><strong>Pour qui :</strong> ${has(p.forWho) ? esc(p.forWho) : todo("Profil de l’acheteur")}</p>
+      ${pros}
+      ${cons}
+      <div class="card-foot">
+        <span class="asin">ASIN ${esc(String(p.asin || "").toUpperCase())}</span>
+        ${cta}
+        <span class="price-note">Prix et disponibilité : voir ${esc(mk.label)}</span>
+      </div>
+    </div>
+  </article>`;
+}
+
+function placeholderCard(i) {
+  return `
+  <article class="card">
+    <div class="media">${todo("Photo du produit")}</div>
+    <div class="card-body">
+      <div class="card-meta"><span class="cat">Emplacement produit ${i}</span></div>
+      <h3>${todo("Nom du produit")}</h3>
+      <p class="verdict">${todo("Verdict en une phrase")}</p>
+      <p class="who"><strong>Pour qui :</strong> ${todo("Profil de l’acheteur")}</p>
+      ${todo("Points forts")}
+      ${todo("Limites")}
+      <div class="card-foot">
+        <span class="asin">ASIN : 10 caractères, à copier depuis la page du produit</span>
+        <span class="btn off" aria-disabled="true">Lien affilié à activer</span>
+      </div>
+    </div>
+  </article>`;
+}
+
+let activeCat = "";
+function renderGrid() {
+  const grid = $("grid");
+  if (!products.length) {
+    const n = Math.max(1, Number(C.minProducts) || 3);
+    grid.innerHTML = Array.from({ length: n }, (_, i) => placeholderCard(i + 1)).join("");
+    return;
+  }
+  const list = activeCat ? products.filter((p) => p.category === activeCat) : products;
+  grid.innerHTML = list.map(productCard).join("");
+}
+
+function renderChips() {
+  const el = $("chips");
+  const cats = Array.isArray(C.categories) ? C.categories.filter(has) : [];
+  if (!cats.length) {
+    el.innerHTML = todo("Catégories du site");
+    return;
+  }
+  el.innerHTML = ["", ...cats]
+    .map((c) => `<button type="button" class="chip" data-cat="${esc(c)}" aria-pressed="${c === activeCat}">${c ? esc(c) : "Tout"}</button>`)
+    .join("");
+}
+$("chips").addEventListener("click", (e) => {
+  const b = e.target.closest("button.chip");
+  if (!b) return;
+  activeCat = b.dataset.cat || "";
+  renderChips();
+  renderGrid();
+});
+renderChips();
+renderGrid();
+
+/* ---------- Comparatif ---------- */
+(function renderCompare() {
+  const el = $("compare");
+  if (!validProducts.length) {
+    el.innerHTML = todoBlock(
+      "Le tableau se remplit tout seul",
+      "Dès que des produits (nom + ASIN) sont ajoutés, ils apparaissent ici avec leur profil, leur point fort et leur limite."
+    );
+    return;
+  }
+  const rows = validProducts.map((p) => {
+    const href = linkFor(p);
+    return `<tr>
+      <td>${esc(p.name)}</td>
+      <td>${has(p.forWho) ? esc(p.forWho) : "—"}</td>
+      <td>${Array.isArray(p.pros) && p.pros[0] ? esc(p.pros[0]) : "—"}</td>
+      <td>${Array.isArray(p.cons) && p.cons[0] ? esc(p.cons[0]) : "—"}</td>
+      <td>${href ? `<a class="inline" href="${esc(href)}" target="_blank" rel="sponsored nofollow noopener">Voir le prix</a>` : "—"}</td>
+    </tr>`;
+  }).join("");
+  el.innerHTML = `<div class="table-wrap"><table>
+    <thead><tr><th scope="col">Produit</th><th scope="col">Pour qui</th><th scope="col">Point fort</th><th scope="col">Limite</th><th scope="col">Prix</th></tr></thead>
+    <tbody>${rows}</tbody></table></div>`;
+})();
+
+/* ---------- Guides ---------- */
+(function renderGuides() {
+  const el = $("guideList");
+  const guides = Array.isArray(C.guides) ? C.guides.filter((g) => g && has(g.title)) : [];
+  if (!guides.length) {
+    el.innerHTML = `<div class="empty">${todoBlock(
+      "Guides d’achat",
+      "Pour chaque guide : un titre, un résumé de 1 à 2 phrases et un lien vers la page. Visez 3 à 5 guides pour commencer."
+    )}</div>`;
+    return;
+  }
+  el.innerHTML = guides.map((g) => {
+    const inner = `<h3>${esc(g.title)}</h3>${has(g.summary) ? `<p>${esc(g.summary)}</p>` : ""}${has(g.url) ? `<span class="go">Lire le guide</span>` : ""}`;
+    return has(g.url) ? `<a class="guide" href="${esc(g.url)}">${inner}</a>` : `<div class="guide">${inner}</div>`;
+  }).join("");
+})();
+
+/* ---------- Méthode ---------- */
+(function renderMethod() {
+  const m = C.methodology || {};
+  const criteria = Array.isArray(m.criteria) ? m.criteria.filter((c) => c && has(c.title)) : [];
+  let html = "";
+  html += has(m.intro) ? `<p class="intro">${esc(m.intro)}</p>` : "";
+  if (criteria.length) {
+    html += `<ul class="criteria">${criteria.map((c) => `<li><strong>${esc(c.title)}</strong>${has(c.text) ? `<p>${esc(c.text)}</p>` : ""}</li>`).join("")}</ul>`;
+  }
+  if (!has(m.intro) && !criteria.length) {
+    html = todoBlock(
+      "Votre méthode de sélection",
+      "Décrivez uniquement ce que vous faites réellement : test en main propre, analyse d’avis, comparaison de fiches techniques. Une méthode annoncée mais non appliquée trompe les lecteurs et peut contrevenir aux règles sur les pratiques commerciales trompeuses."
+    );
+  }
+  $("method").innerHTML = html;
+})();
+
+/* ---------- À propos ---------- */
+(function renderAbout() { 
+  const a = C.author || {}; 
+  
+  if (!has(a.name) && !has(a.bio)) { 
+    $('about').innerHTML = todoBlock( 
+      "Qui êtes-vous ?", 
+      "Nom (ou pseudonyme), parcours ou expérience liés au sujet, et pourquoi vous recommandez ces produits. Cette page est ce qui rend un site d affiliation crédible." 
+    ); 
+    return; 
+  } 
+
+  $('about').innerHTML = `
+    <div class="about">
+      <div> 
+        <h3>${has(a.name) ? esc(a.name) : todo("Nom")}</h3> 
+        <p>${has(a.bio) ? esc(a.bio) : todo("Présentation")}</p>
+      </div>
+    </div>
+  `; 
+})();
+
+
+
+/* ---------- Pied de page ---------- */
+$("footer").innerHTML = `
+  <div>
+    <a class="brand" href="#top">${has(C.siteName) ? esc(C.siteName) : todo("Nom du site")}</a>
+    <p>Site indépendant, non exploité par ${esc(mk.label.replace(/\.ca$/i, ""))}. Les prix et la disponibilité changent : vérifiez-les sur la fiche du produit avant d’acheter.</p>
+  </div>
+  <div>
+    <h3>Informations</h3>
+    <ul>
+      <li>${has(C.privacyUrl) ? `<a href="${esc(C.privacyUrl)}">Politique de confidentialité</a>` : todo("Lien de la politique de confidentialité")}</li>
+      <li>${has(C.contactEmail) ? `Contact : <span class="email">${esc(C.contactEmail)}</span>` : todo("Courriel de contact")}</li>
+    </ul>
+  </div>
+  <div>
+    <h3>Navigation</h3>
+    <ul>
+      <li><a href="#selection">La sélection</a></li>
+      <li><a href="#methode">Notre méthode</a></li>
+      <li><a href="#apropos">À propos</a></li>
+    </ul>
+  </div>
+  <p class="wide">${esc(C.disclosure)}</p>`;
+
+/* ---------- Panneau de préparation (calculé depuis CONFIG) ---------- */
+(function renderSetup() {
+  const a = C.author || {};
+  const m = C.methodology || {};
+  const cats = Array.isArray(C.categories) ? C.categories.filter(has) : [];
+  const guides = Array.isArray(C.guides) ? C.guides.filter((g) => g && has(g.title)) : [];
+  const invalidAsin = products.filter((p) => !ASIN_RE.test(p.asin || ""));
+  const need = Math.max(1, Number(C.minProducts) || 3);
+
+  const checks = [
+    { key: "affiliateTag", label: "Identifiant Partenaires (tracking ID)", hint: "Dans votre compte Partenaires, de type nomdusite-20. Sans lui, aucun lien ne rapporte.", ok: has(C.affiliateTag) },
+    { key: "siteName", label: "Nom du site", hint: "Évitez le mot Amazon dans le nom et le domaine.", ok: has(C.siteName) },
+    { key: "siteUrl", label: "Adresse publique du site", hint: "Le domaine où le site sera en ligne. Le programme évalue un site réel et accessible.", ok: has(C.siteUrl) },
+    { key: "niche", label: "Sujet (niche)", hint: "Une thématique précise plutôt qu’un catalogue général.", ok: has(C.niche) },
+    { key: "headline", label: "Titre d’accroche et sous-titre", hint: "La promesse faite au lecteur.", ok: has(C.headline) && has(C.subheadline) },
+    { key: "products", label: `Produits : ${validProducts.length} sur ${need} minimum`, hint: "Pour chacun : nom, ASIN, catégorie, verdict, pour qui, points forts et limites.", ok: validProducts.length >= need },
+    { key: "products[].asin", label: "ASIN valides", hint: invalidAsin.length ? `${invalidAsin.length} produit(s) sans ASIN de 10 caractères.` : "Chaque ASIN fait 10 caractères (lettres et chiffres).", ok: products.length > 0 && invalidAsin.length === 0 },
+    { key: "categories", label: "Catégories", hint: "Les rubriques qui organisent la sélection.", ok: cats.length > 0 },
+    { key: "guides", label: "Guides d’achat", hint: "Titre, résumé et lien pour chaque guide.", ok: guides.length > 0 },
+    { key: "methodology", label: "Méthode de sélection", hint: "Seulement ce que vous faites réellement.", ok: has(m.intro) || (Array.isArray(m.criteria) && m.criteria.length > 0) },
+    { key: "author", label: "Présentation de l’auteur", hint: "Nom, parcours et photo si vous le souhaitez.", ok: has(a.name) && has(a.bio) },
+    { key: "contactEmail", label: "Courriel de contact", hint: "Adresse affichée dans le pied de page.", ok: has(C.contactEmail) },
+    { key: "privacyUrl", label: "Politique de confidentialité", hint: "Doit mentionner votre participation au programme et les données collectées.", ok: has(C.privacyUrl) },
+    { key: "lastChecked", label: "Date de vérification des produits", hint: "Date à laquelle vous avez vérifié chaque fiche pour la dernière fois.", ok: has(C.lastChecked) }
+  ];
+  const done = checks.filter((c) => c.ok).length;
+  if (done === checks.length) return;
+
+  const rows = checks.map((c) => `
+    <li class="${c.ok ? "done" : ""}">
+      <span class="state ${c.ok ? "is-ok" : "is-todo"}">${c.ok ? "Fait" : "À compléter"}</span>
+      <span class="what"><strong>${esc(c.label)}</strong><small>${esc(c.hint)} <code>${esc(c.key)}</code></small></span>
+    </li>`).join("");
+
+  const outside = [
+    ["Inscription au programme", "Créer le compte Partenaires pour Amazon.ca, faire valider le site et lire le Contrat d’adhésion."],
+    ["Premières ventes", "Le programme exige des ventes qualifiantes dans un délai initial (environ 180 jours). À confirmer dans votre compte."],
+    ["Prix et images", "N’affichez un prix ou une image de produit que selon les règles du programme (liens fournis par Amazon ou API). Ce site n’en affiche aucun par défaut."],
+    ["Déclaration", "Texte de transparence déjà en place en haut et en bas de page. Confirmez la formule exacte dans votre compte."]
+  ].map(([t, h]) => `<li><span class="state is-check">À vérifier</span><span class="what"><strong>${esc(t)}</strong><small>${esc(h)}</small></span></li>`).join("");
+
+  const el = $("setup");
+  el.hidden = false;
+  el.innerHTML = `
+    <summary>Avant la mise en ligne <span class="count">${done}/${checks.length}</span></summary>
+    <div class="setup-body">
+      <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="${checks.length}" aria-valuenow="${done}"><i style="width:${Math.round((done / checks.length) * 100)}%"></i></div>
+      <p>Ce site n’affiche aucun produit, nom ni texte inventé. Les éléments marqués « À compléter » sont les informations à fournir. Ce panneau disparaît quand tout est rempli.</p>
+      <div class="setup-cols">
+        <div><h3>Contenu du site</h3><ul class="checklist">${rows}</ul></div>
+        <div><h3>Hors du site, côté compte</h3><ul class="checklist">${outside}</ul></div>
+      </div>
+    </div>`;
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Politique de confidentialité</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<style>
+/* Mise en page : en-tête fixe, bandeau de transparence, grand panneau d'accroche clair, fiches arrondies en grille, comparatif, guides, méthode, à propos.
+   Contenu 100 % piloté par CONFIG. Ce qui manque s'affiche en « À compléter ». */
+:root {
+  --bg: #FFFFFF;
+  --surface: #FFFFFF;
+  --surface-2: #F3F6FA;
+  --tint: #F1F4FF;
+  --dot: #D9E0FB;
+  --fg: #0B1220;
+  --fg-muted: #566176;
+  --line: #E4E9F0;
+  --accent: #3355FF;
+  --accent-fg: #FFFFFF;
+  --accent-soft: #EAEFFF;
+  --minus: #C0392B;
+  --todo: #A04A00;
+  --todo-bg: #FFF6EA;
+  --todo-line: #F0B26B;
+  --todo-hatch: #FDE8CC;
+  --shadow: 0 1px 2px rgba(11, 18, 32, 0.04), 0 10px 28px rgba(11, 18, 32, 0.07);
+  --shadow-hover: 0 2px 4px rgba(11, 18, 32, 0.05), 0 16px 36px rgba(11, 18, 32, 0.12);
+  --font-display: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-body: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, Menlo, Consolas, monospace;
+  color-scheme: light;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 72px;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--bg); }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; line-height: 1.12; letter-spacing: -0.03em; }
+p { margin: 0; }
+a { color: inherit; }
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 8px; }
+.wrap { max-width: 1160px; margin: 0 auto; }
+
+/* En-tête fixe */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 24px; padding-block: 14px; background: var(--bg); border-bottom: 1px solid var(--line); }
+.brand { font-weight: 800; font-size: 1.25rem; letter-spacing: -0.03em; text-decoration: none; min-width: 0; }
+.nav { display: flex; flex-wrap: wrap; gap: 2px; font-size: 0.9rem; font-weight: 500; }
+.nav a { text-decoration: none; color: var(--fg-muted); padding: 8px 14px; border-radius: 999px; transition: color .15s, background .15s; }
+.nav a:hover { color: var(--fg); background: var(--surface-2); }
+
+/* Marqueurs « à compléter » */
+.todo { color: var(--todo); background: repeating-linear-gradient(135deg, transparent 0 7px, var(--todo-hatch) 7px 8px), var(--todo-bg); border: 1.5px dashed var(--todo-line); border-radius: 8px; padding: 2px 8px; font-size: 0.9em; font-weight: 500; line-height: 1.5; }
+.todo-block { display: block; padding: 16px 18px; border-radius: 14px; }
+.todo-block p { margin-top: 6px; font-size: 0.9rem; font-weight: 400; max-width: 70ch; }
+.todo-tag { display: inline-block; vertical-align: middle; margin-right: 8px; padding: 1px 7px; border-radius: 999px; background: var(--todo); color: var(--todo-bg); font-family: var(--font-mono); font-size: 0.66rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; line-height: 1.6; }
+.mono { font-family: var(--font-mono); }
+.label { font-family: var(--font-mono); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+
+/* Transparence */
+.disclosure { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; margin-top: 16px; padding: 12px 18px; background: var(--accent-soft); border-radius: 14px; font-size: 0.875rem; }
+.disclosure span:last-child { min-width: 0; }
+
+/* Panneau de préparation */
+.setup { margin-top: 20px; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; box-shadow: var(--shadow); }
+.setup summary { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; padding: 18px 24px; cursor: pointer; list-style: none; font-weight: 700; font-size: 1.05rem; letter-spacing: -0.02em; }
+.setup summary::-webkit-details-marker { display: none; }
+.setup summary::after { content: "Réduire"; margin-left: auto; font-family: var(--font-mono); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg-muted); }
+.setup:not([open]) summary::after { content: "Afficher"; }
+.count { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 500; color: var(--todo); background: var(--todo-bg); border: 1px solid var(--todo-line); border-radius: 999px; padding: 1px 10px; font-variant-numeric: tabular-nums; }
+.setup-body { padding: 0 24px 24px; display: grid; gap: 20px; }
+.bar { height: 8px; border-radius: 999px; background: var(--surface-2); overflow: hidden; }
+.bar i { display: block; height: 100%; border-radius: 999px; background: var(--accent); }
+.setup-body > p { font-size: 0.9rem; color: var(--fg-muted); max-width: 72ch; }
+.setup-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 24px 40px; }
+.setup h3 { font-size: 0.72rem; font-family: var(--font-mono); font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg-muted); margin-bottom: 6px; }
+.checklist { list-style: none; margin: 0; padding: 0; display: grid; }
+.checklist li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 12px; align-items: start; padding: 11px 0; border-top: 1px solid var(--line); font-size: 0.9rem; }
+.checklist li:first-child { border-top: 0; }
+.checklist .state { font-family: var(--font-mono); font-size: 0.66rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; white-space: nowrap; margin-top: 2px; }
+.state.is-todo { background: var(--todo); color: var(--todo-bg); }
+.state.is-ok { background: var(--accent-soft); color: var(--accent); }
+.state.is-check { background: var(--surface-2); color: var(--fg-muted); }
+.checklist .what { min-width: 0; }
+.checklist small { display: block; color: var(--fg-muted); font-size: 0.8rem; line-height: 1.45; margin-top: 2px; }
+.checklist code { font-family: var(--font-mono); font-size: 0.74rem; color: var(--fg-muted); overflow-wrap: anywhere; }
+.checklist li.done .what > strong { color: var(--fg-muted); font-weight: 500; }
+
+/* Accroche : grand panneau clair */
+.hero { margin-top: 24px; padding: clamp(28px, 6vw, 72px); display: grid; gap: 28px; background-color: var(--tint); background-image: radial-gradient(var(--dot) 1.2px, transparent 1.2px); background-size: 22px 22px; border-radius: 32px; border: 1px solid var(--line); scroll-margin-top: 80px; }
+.eyebrow { justify-self: start; max-width: 100%; padding: 6px 14px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); font-size: 0.82rem; font-weight: 600; color: var(--accent); }
+.hero h1 { font-size: clamp(2.3rem, 6vw, 4.4rem); font-weight: 800; max-width: 18ch; letter-spacing: -0.04em; line-height: 1.02; }
+.hero h1 .todo { font-family: var(--font-display); font-weight: 700; font-size: inherit; padding: 0.04em 0.2em; display: inline; line-height: 1.3; border-radius: 14px; }
+.hero .lead { font-size: 1.15rem; color: var(--fg-muted); max-width: 56ch; }
+.hero .lead .todo { font-size: 0.95rem; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 12px 26px; border-radius: 999px; border: 1.5px solid var(--accent); background: var(--accent); color: var(--accent-fg); font: 600 0.95rem/1.2 var(--font-body); text-decoration: none; cursor: pointer; transition: transform .15s, box-shadow .15s, background .15s; }
+.btn:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(51, 85, 255, 0.28); }
+.btn.ghost { background: var(--surface); color: var(--fg); border-color: var(--line); }
+.btn.ghost:hover { border-color: var(--fg-muted); box-shadow: none; }
+.btn.off { background: transparent; color: var(--todo); border: 1.5px dashed var(--todo-line); cursor: not-allowed; font-weight: 500; font-size: 0.86rem; text-align: center; border-radius: 14px; }
+.btn.off:hover { transform: none; box-shadow: none; }
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr)); gap: 12px; margin: 8px 0 0; }
+.facts div { min-width: 0; padding: 14px 18px; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; }
+.facts dt { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg-muted); }
+.facts dd { margin: 2px 0 0; font-weight: 700; font-variant-numeric: tabular-nums; }
+
+/* Sections */
+.sec { margin-top: 88px; scroll-margin-top: 88px; }
+.sec-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 10px 32px; margin-bottom: 28px; }
+.sec-head h2 { font-size: clamp(1.8rem, 3.6vw, 2.5rem); font-weight: 800; }
+.sec-head p { color: var(--fg-muted); font-size: 0.98rem; max-width: 52ch; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+.chip { min-height: 40px; padding: 8px 18px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--fg); font: 600 0.875rem/1.2 var(--font-body); cursor: pointer; transition: border-color .15s, background .15s, color .15s; }
+.chip:hover { border-color: var(--fg-muted); }
+.chip[aria-pressed="true"] { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); }
+
+/* Fiches produit */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr)); gap: 24px; }
+.card { display: flex; flex-direction: column; min-width: 0; padding: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 24px; box-shadow: var(--shadow); transition: box-shadow .2s, transform .2s; }
+.card:hover { box-shadow: var(--shadow-hover); transform: translateY(-3px); }
+.media { aspect-ratio: 4 / 3; max-width: 100%; background: var(--surface-2); border-radius: 16px; overflow: hidden; display: grid; place-items: center; }
+.media img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.media .todo { font-size: 0.85rem; }
+.card-body { display: flex; flex-direction: column; gap: 14px; padding: 18px 10px 10px; flex: 1; min-width: 0; }
+.card-meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 12px; align-items: center; }
+.cat { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); }
+.badge { font-size: 0.72rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; background: var(--accent); color: var(--accent-fg); }
+.card h3 { font-size: 1.35rem; font-weight: 800; overflow-wrap: anywhere; }
+.verdict { color: var(--fg); }
+.who { font-size: 0.9rem; color: var(--fg-muted); }
+.who strong { color: var(--fg); font-weight: 700; }
+.pc { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; font-size: 0.9rem; }
+.pc li { display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: 6px; }
+.pc li::before { font-family: var(--font-mono); font-weight: 500; }
+.pc.plus li::before { content: "+"; color: var(--accent); }
+.pc.minus li::before { content: "\2212"; color: var(--minus); }
+.card-foot { margin-top: auto; display: grid; gap: 8px; padding-top: 6px; }
+.asin { font-family: var(--font-mono); font-size: 0.74rem; color: var(--fg-muted); overflow-wrap: anywhere; }
+.price-note { font-size: 0.78rem; color: var(--fg-muted); text-align: center; }
+.empty { grid-column: 1 / -1; }
+
+/* Comparatif */
+.table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; box-shadow: var(--shadow); }
+table { border-collapse: collapse; width: 100%; min-width: 680px; font-size: 0.92rem; }
+th, td { text-align: left; vertical-align: top; padding: 16px 20px; border-bottom: 1px solid var(--line); }
+tr:last-child td { border-bottom: 0; }
+th { font-family: var(--font-mono); font-size: 0.68rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg-muted); background: var(--surface-2); }
+td:first-child { font-weight: 700; }
+td a.inline { color: var(--accent); font-weight: 700; text-underline-offset: 3px; white-space: nowrap; }
+
+/* Guides, méthode, à propos */
+.guides { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr)); gap: 24px; }
+.guide { display: grid; gap: 8px; align-content: start; padding: 24px; background: var(--surface); border: 1px solid var(--line); border-radius: 24px; box-shadow: var(--shadow); text-decoration: none; transition: box-shadow .2s, transform .2s; min-width: 0; }
+a.guide:hover { box-shadow: var(--shadow-hover); transform: translateY(-3px); }
+.guide h3 { font-size: 1.2rem; font-weight: 800; }
+.guide p { font-size: 0.93rem; color: var(--fg-muted); }
+.guide .go { font-weight: 700; color: var(--accent); font-size: 0.9rem; }
+.criteria { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 16px; }
+.criteria li { padding: 20px 22px; background: var(--surface-2); border-radius: 20px; min-width: 0; }
+.criteria strong { display: block; font-size: 1.05rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 4px; }
+.criteria p { font-size: 0.92rem; color: var(--fg-muted); }
+.intro { max-width: 68ch; margin-bottom: 20px; color: var(--fg-muted); }
+.about { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 24px; align-items: start; max-width: 780px; padding: 24px; background: var(--surface); border: 1px solid var(--line); border-radius: 24px; box-shadow: var(--shadow); }
+.about img { width: 96px; height: 96px; border-radius: 50%; object-fit: cover; }
+.about h3 { font-size: 1.3rem; font-weight: 800; margin-bottom: 6px; }
+.about-photo { width: 96px; height: 96px; border-radius: 50%; display: grid; place-items: center; text-align: center; font-size: 0.7rem; padding: 6px; }
+@media (max-width: 520px) { .about { grid-template-columns: minmax(0, 1fr); } }
+
+/* Pied de page */
+.foot { margin-top: 96px; padding: 32px; background: var(--surface-2); border-radius: 28px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 28px 40px; font-size: 0.875rem; color: var(--fg-muted); }
+.foot h3 { font-size: 0.7rem; font-family: var(--font-mono); font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; color: var(--fg); }
+.foot .brand { color: var(--fg); display: inline-block; margin-bottom: 8px; }
+.foot ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.foot a { color: var(--fg); text-underline-offset: 3px; }
+.foot .wide { grid-column: 1 / -1; padding-top: 20px; border-top: 1px solid var(--line); font-size: 0.8rem; }
+.email { font-family: var(--font-mono); user-select: all; overflow-wrap: anywhere; }
+
+/* Page de politique */
+[hidden] { display: none !important; }
+.doc { max-width: 760px; margin: 48px auto 0; }
+.doc .eyebrow { display: inline-block; margin-bottom: 14px; }
+.doc-title { font-size: clamp(2.1rem, 5vw, 3.2rem); font-weight: 800; letter-spacing: -0.04em; line-height: 1.05; }
+.meta { margin-top: 12px; color: var(--fg-muted); font-size: 0.9rem; }
+.doc .setup { margin-top: 28px; }
+.doc .intro { margin: 28px 0 0; max-width: 68ch; color: var(--fg); font-size: 1.05rem; }
+.toc { margin-top: 28px; padding: 20px 24px; background: var(--surface-2); border-radius: 20px; }
+.toc ol { list-style: none; margin: 10px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 4px 24px; counter-reset: toc; }
+.toc li { counter-increment: toc; }
+.toc li::before { content: counter(toc) ". "; font-family: var(--font-mono); font-size: 0.8rem; color: var(--fg-muted); }
+.toc a { text-decoration: none; font-size: 0.92rem; font-weight: 500; }
+.toc a:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+.doc section { scroll-margin-top: 88px; }
+.doc section h2 { margin-top: 48px; font-size: 1.5rem; font-weight: 800; scroll-margin-top: 88px; }
+.doc section h3 { margin-top: 20px; font-size: 1.05rem; font-weight: 700; letter-spacing: -0.01em; }
+.doc section p { max-width: 68ch; margin-top: 12px; }
+.doc section h2 + p, .doc section h3 + p { margin-top: 10px; }
+.doc ul { margin: 12px 0 0; padding-left: 1.3rem; max-width: 68ch; display: grid; gap: 6px; }
+.todo-note { display: block; margin-top: 6px; font-size: 0.9rem; font-weight: 400; }
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="index.html"><span data-k="siteName"></span></a>
+    <nav class="nav" aria-label="Navigation principale">
+      <a href="index.html">← Retour au site</a>
+    </nav>
+  </header>
+
+  <main class="doc">
+    <p class="eyebrow">Document légal</p>
+    <h1 class="doc-title">Politique de confidentialité</h1>
+    <p class="meta">Dernière mise à jour : <span data-k="lastUpdated"></span></p>
+
+    <details class="setup" id="setup" open hidden></details>
+
+    <p class="intro">Cette politique explique quels renseignements personnels peuvent être recueillis lorsque vous visitez ce site, pourquoi, comment ils sont protégés et comment exercer vos droits. Elle tient compte de la Loi sur la protection des renseignements personnels dans le secteur privé du Québec (Loi 25) et de la Loi sur la protection des renseignements personnels et les documents électroniques (LPRPDE).</p>
+
+    <nav class="toc" aria-label="Sur cette page">
+      <span class="label">Sur cette page</span>
+      <ol>
+        <li><a href="#responsable">Qui est responsable</a></li>
+        <li><a href="#collecte">Renseignements recueillis</a></li>
+        <li><a href="#amazon">Liens affiliés Amazon</a></li>
+        <li><a href="#temoins">Témoins et polices</a></li>
+        <li><a href="#usage">Utilisation</a></li>
+        <li><a href="#partage">Communication à des tiers</a></li>
+        <li><a href="#conservation">Conservation</a></li>
+        <li><a href="#securite">Sécurité</a></li>
+        <li><a href="#droits">Vos droits</a></li>
+        <li><a href="#modifications">Modifications</a></li>
+        <li><a href="#contact">Nous joindre</a></li>
+      </ol>
+    </nav>
+
+    <section id="responsable">
+      <h2>Qui est responsable</h2>
+      <p>Le site <span data-k="siteName"></span> (adresse : <span data-k="siteUrl"></span>) est exploité par <span data-k="operatorName"></span>.</p>
+      <p>La personne responsable de la protection des renseignements personnels est <span data-k="officerName"></span>. Vous pouvez la joindre à <span data-k="contactEmail"></span>.</p>
+    </section>
+
+    <section id="collecte">
+      <h2>Renseignements recueillis</h2>
+      <h3>Ce que vous nous transmettez</h3>
+      <p>Si vous nous écrivez, nous recevons votre adresse courriel, votre nom s’il apparaît dans votre message, et le contenu du message. Le site ne demande ni compte, ni paiement, ni information bancaire. Les achats se font uniquement sur Amazon.ca.</p>
+      <p data-when="form">Si vous utilisez le formulaire de contact, les renseignements que vous saisissez (nom, courriel, message) servent uniquement à vous répondre. Ils sont transmis par l’intermédiaire de <span data-k="contactForm.serviceName"></span>.</p>
+      <p data-when="newsletter">Si vous vous abonnez à notre infolettre, nous recueillons votre adresse courriel avec votre consentement, par l’intermédiaire de <span data-k="newsletter.serviceName"></span>. Chaque message contient un lien de désabonnement.</p>
+      <h3>Ce qui est recueilli automatiquement</h3>
+      <p>Lorsque vous consultez le site, le serveur qui l’héberge peut consigner des données techniques : adresse IP, type d’appareil et de navigateur, pages consultées, date et heure. Ces journaux servent au fonctionnement et à la sécurité du site. Notre hébergeur est <span data-k="hostName"></span>.</p>
+    </section>
+
+    <section id="amazon">
+      <h2>Liens affiliés Amazon</h2>
+      <p>Nous participons au Programme Partenaires d’Amazon.ca. En tant que Partenaire Amazon, nous réalisons un bénéfice sur les achats remplissant les conditions requises.</p>
+      <p>Les liens vers des produits contiennent notre identifiant de partenaire. Lorsque vous cliquez sur l’un d’eux, vous quittez ce site pour Amazon.ca. Amazon peut alors enregistrer ce clic et utiliser des témoins ou des identifiants pour associer un achat éventuel à notre site. Cela ne change pas le prix que vous payez.</p>
+      <p>Les rapports qu’Amazon nous fournit portent sur les ventes et les commissions. À notre connaissance, ils ne contiennent ni votre nom ni vos coordonnées. Amazon traite vos renseignements selon son propre avis de confidentialité, accessible au bas de chaque page d’Amazon.ca.</p>
+    </section>
+
+    <section id="temoins">
+      <h2>Témoins et polices</h2>
+      <p data-unless="analytics">Ce site n’utilise aucun outil d’analyse ni témoin de suivi qui nous soit propre.</p>
+      <div data-when="analytics">
+        <p>Nous utilisons <span data-k="analytics.toolName"></span> pour mesurer la fréquentation du site : pages vues, provenance des visiteurs et type d’appareil. Cet outil dépose des témoins sur votre appareil. Il ne s’active qu’après votre consentement, donné dans le bandeau de témoins affiché à votre première visite. Vous pouvez retirer ce consentement en tout temps depuis <span data-k="analytics.revokePlace"></span>.</p>
+        <p><span class="todo todo-block"><span class="todo-tag">À compléter</span><strong>Bandeau de consentement</strong><span class="todo-note">Cette page ne le fournit pas. Un outil de suivi exige un bandeau qui bloque la collecte tant que le visiteur n’a pas choisi. Ajoutez-le avant d’activer l’outil. Retirez ce rappel ensuite.</span></span></p>
+      </div>
+      <p data-when="fonts">Pour afficher ses polices de caractères, le site charge des fichiers depuis le service Google Fonts. Votre navigateur transmet alors votre adresse IP et des données techniques à Google.</p>
+    </section>
+
+    <section id="usage">
+      <h2>Utilisation des renseignements</h2>
+      <p>Nous utilisons les renseignements décrits ci-dessus pour :</p>
+      <ul>
+        <li>répondre aux messages que vous nous envoyez;</li>
+        <li data-when="newsletter">vous envoyer notre infolettre, si vous y êtes abonné;</li>
+        <li data-when="analytics">mesurer la fréquentation du site, avec votre consentement;</li>
+        <li>assurer le fonctionnement et la sécurité du site;</li>
+        <li>respecter nos obligations légales.</li>
+      </ul>
+    </section>
+
+    <section id="partage">
+      <h2>Communication à des tiers</h2>
+      <p>Nous ne vendons ni ne louons vos renseignements personnels. Ils ne sont communiqués qu’aux fournisseurs nécessaires au fonctionnement du site : <span id="recipients"></span>. Nous pouvons aussi les communiquer lorsque la loi l’exige.</p>
+      <p>Certains de ces fournisseurs peuvent traiter des renseignements à l’extérieur du Québec, notamment aux États-Unis.</p>
+    </section>
+
+    <section id="conservation">
+      <h2>Conservation</h2>
+      <p>Les courriels que vous nous envoyez sont conservés <span data-k="emailRetention"></span>, puis supprimés. Les journaux techniques de l’hébergeur sont conservés selon sa politique, soit <span data-k="hostRetention"></span>.</p>
+      <p data-when="analytics">Les données d’analyse sont conservées <span data-k="analytics.retention"></span>.</p>
+    </section>
+
+    <section id="securite">
+      <h2>Sécurité</h2>
+      <p>Nous prenons des mesures raisonnables pour protéger vos renseignements : <span id="https"></span>accès limité à <span data-k="accessWho"></span> et mots de passe uniques. Aucune méthode n’est infaillible.</p>
+      <p>En cas d’incident de confidentialité présentant un risque de préjudice sérieux, nous avertirons la Commission d’accès à l’information du Québec et les personnes concernées.</p>
+    </section>
+
+    <section id="droits">
+      <h2>Vos droits</h2>
+      <p>Vous pouvez nous demander :</p>
+      <ul>
+        <li>de savoir quels renseignements nous détenons à votre sujet et d’en recevoir une copie;</li>
+        <li>de corriger un renseignement inexact;</li>
+        <li>de supprimer vos renseignements ou de retirer votre consentement.</li>
+      </ul>
+      <p>Écrivez à la personne responsable à <span data-k="contactEmail"></span>. Nous répondons dans un délai de 30 jours.</p>
+      <p>Si vous estimez que vos droits ne sont pas respectés, vous pouvez déposer une plainte auprès de la Commission d’accès à l’information du Québec (cai.gouv.qc.ca) ou du Commissariat à la protection de la vie privée du Canada (priv.gc.ca).</p>
+    </section>
+
+    <section id="modifications">
+      <h2>Modifications de cette politique</h2>
+      <p>Nous pouvons modifier cette politique, par exemple si nous ajoutons un outil au site. La date de la dernière mise à jour figure en haut de la page.</p>
+    </section>
+
+    <section id="contact">
+      <h2>Nous joindre</h2>
+      <p>Pour toute question sur cette politique : <span data-k="contactEmail"></span>.</p>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div>
+      <a class="brand" href="index.html"><span data-k="siteName"></span></a>
+      <p>Site indépendant, non exploité par Amazon.</p>
+    </div>
+    <div>
+      <h3>Informations</h3>
+      <ul>
+        <li><a href="index.html">Retour à l’accueil</a></li>
+        <li>Contact : <span data-k="contactEmail"></span></li>
+      </ul>
+    </div>
+    <p class="wide">En tant que Partenaire Amazon, je réalise un bénéfice sur les achats remplissant les conditions requises.</p>
+  </footer>
+</div>
+
+<script>
+/* ============================================================
+   CONFIG : le seul bloc à remplir.
+   Laissez "" tant que vous n'avez pas l'information : la page
+   affichera « À compléter » à la place, sans rien inventer.
+   Mettez enabled: true pour activer une section optionnelle.
+   ============================================================ */
+const CONFIG = {
+  siteName: "Verdict",            // Nom du site
+  siteUrl: "https://gravier.dev",             // Adresse du site, ex. https://votresite.ca
+  operatorName: "Édouard Viau Désiront",        // Personne ou entreprise qui exploite le site
+  officerName: "Édouard Viau Désiront",         // Responsable de la protection des renseignements personnels : nom et titre
+  contactEmail: "evd.partner@proton.me",        // Courriel de contact
+  lastUpdated: "2026-10-21",         // Date de mise à jour, ex. 21 octobre 2026
+  hostName: "Édouard Viau Désiront",            // Nom de l'hébergeur du site
+  hostRetention: "30 jours",       // Durée de conservation des journaux de l'hébergeur, selon ses conditions
+  emailRetention: "12 mois",      // Durée de conservation des courriels reçus, ex. 12 mois
+  accessWho: "moi seul",           // Qui a accès au site : ex. « moi seul » ou « notre équipe »
+  httpsConfirmed: true,   // true seulement si votre site est bien servi en HTTPS
+  usesGoogleFonts: true,   // false si les polices sont hébergées sur votre propre site
+
+  analytics:   { enabled: false, toolName: "", revokePlace: "", retention: "" },
+  newsletter:  { enabled: false, serviceName: "" },
+  contactForm: { enabled: false, serviceName: "" }
+};
+
+/* ---------- Outils ---------- */
+const $ = (id) => document.getElementById(id);
+const ESC = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
+const esc = (s) => String(s == null ? "" : s).replace(/[&<>"']/g, (c) => ESC[c]);
+const has = (v) => typeof v === "string" && v.trim() !== "";
+const todo = (t) => `<span class="todo"><span class="todo-tag">À compléter</span>${esc(t)}</span>`;
+const C = CONFIG;
+const get = (path) => path.split(".").reduce((o, k) => (o == null ? undefined : o[k]), C);
+
+const LABELS = {
+  siteName: "Nom du site",
+  siteUrl: "Adresse web",
+  operatorName: "Nom de l’exploitant",
+  officerName: "Nom et titre du responsable",
+  contactEmail: "Courriel",
+  lastUpdated: "Date de mise à jour",
+  hostName: "Nom de l’hébergeur",
+  hostRetention: "Durée indiquée par l’hébergeur",
+  emailRetention: "Durée précise",
+  accessWho: "Qui a accès au site",
+  "analytics.toolName": "Nom de l’outil d’analyse",
+  "analytics.revokePlace": "Endroit où modifier son choix",
+  "analytics.retention": "Durée",
+  "newsletter.serviceName": "Nom du service d’envoi",
+  "contactForm.serviceName": "Nom du service de formulaire"
+};
+
+/* ---------- Champs ---------- */
+document.querySelectorAll("[data-k]").forEach((el) => {
+  const k = el.dataset.k;
+  const v = get(k);
+  el.innerHTML = has(v) ? esc(v) : todo(LABELS[k] || k);
+});
+document.title = "Politique de confidentialité";
+
+/* ---------- Sections conditionnelles ---------- */
+const flags = {
+  analytics: !!(C.analytics && C.analytics.enabled),
+  newsletter: !!(C.newsletter && C.newsletter.enabled),
+  form: !!(C.contactForm && C.contactForm.enabled),
+  fonts: C.usesGoogleFonts !== false
+};
+document.querySelectorAll("[data-when]").forEach((el) => { el.hidden = !flags[el.dataset.when]; });
+document.querySelectorAll("[data-unless]").forEach((el) => { el.hidden = !!flags[el.dataset.unless]; });
+
+/* ---------- Liste des fournisseurs ---------- */
+(function () {
+  const items = ["l’hébergeur du site"];
+  if (flags.fonts) items.push("Google Fonts pour l’affichage des polices");
+  if (flags.analytics) items.push(has(C.analytics.toolName) ? esc(C.analytics.toolName) + " pour la mesure de fréquentation" : todo("Nom de l’outil d’analyse"));
+  if (flags.newsletter) items.push(has(C.newsletter.serviceName) ? esc(C.newsletter.serviceName) + " pour l’infolettre" : todo("Nom du service d’envoi"));
+  if (flags.form) items.push(has(C.contactForm.serviceName) ? esc(C.contactForm.serviceName) + " pour le formulaire" : todo("Nom du service de formulaire"));
+  items.push("Amazon lorsque vous cliquez sur un lien affilié (voir la section sur les liens affiliés)");
+  const last = items.pop();
+  $("recipients").innerHTML = items.length ? items.join(", ") + " et " + last : last;
+})();
+
+/* ---------- Sécurité : HTTPS seulement si confirmé ---------- */
+$("https").innerHTML = C.httpsConfirmed === true
+  ? "connexion sécurisée au site (HTTPS), "
+  : todo("HTTPS : confirmez avec l’hébergeur puis mettez httpsConfirmed à true") + " ";
+
+/* ---------- Panneau de préparation (calculé depuis CONFIG) ---------- */
+(function () {
+  const checks = [
+    ["siteName", "Nom du site", "Le même que sur la page d’accueil.", has(C.siteName)],
+    ["siteUrl", "Adresse web du site", "Le domaine où le site est en ligne.", has(C.siteUrl)],
+    ["operatorName", "Exploitant du site", "Personne ou entreprise.", has(C.operatorName)],
+    ["officerName", "Responsable de la protection des renseignements", "Nom et titre. Si vous exploitez le site seul, c’est vous.", has(C.officerName)],
+    ["contactEmail", "Courriel de contact", "Adresse que vous consultez réellement.", has(C.contactEmail)],
+    ["hostName", "Hébergeur", "Le service qui met votre site en ligne.", has(C.hostName)],
+    ["hostRetention", "Conservation des journaux de l’hébergeur", "Voir les conditions de votre hébergeur.", has(C.hostRetention)],
+    ["emailRetention", "Conservation des courriels reçus", "Une durée précise.", has(C.emailRetention)],
+    ["accessWho", "Qui a accès au site", "Par exemple « moi seul ».", has(C.accessWho)],
+    ["httpsConfirmed", "Connexion sécurisée (HTTPS)", "Mettez true seulement si votre hébergement la fournit.", C.httpsConfirmed === true],
+    ["lastUpdated", "Date de mise à jour", "À changer à chaque modification du texte.", has(C.lastUpdated)]
+  ];
+  if (flags.analytics) {
+    checks.push(
+      ["analytics.toolName", "Outil d’analyse : nom", "", has(C.analytics.toolName)],
+      ["analytics.revokePlace", "Outil d’analyse : où retirer son consentement", "Le bandeau doit permettre de changer de choix.", has(C.analytics.revokePlace)],
+      ["analytics.retention", "Outil d’analyse : durée de conservation", "", has(C.analytics.retention)]
+    );
+  }
+  if (flags.newsletter) checks.push(["newsletter.serviceName", "Infolettre : service d’envoi", "", has(C.newsletter.serviceName)]);
+  if (flags.form) checks.push(["contactForm.serviceName", "Formulaire : service utilisé", "", has(C.contactForm.serviceName)]);
+
+  const done = checks.filter((c) => c[3]).length;
+  if (done === checks.length) return;
+
+  const rows = checks.map((c) => `
+    <li class="${c[3] ? "done" : ""}">
+      <span class="state ${c[3] ? "is-ok" : "is-todo"}">${c[3] ? "Fait" : "À compléter"}</span>
+      <span class="what"><strong>${esc(c[1])}</strong><small>${c[2] ? esc(c[2]) + " " : ""}<code>${esc(c[0])}</code></small></span>
+    </li>`).join("");
+
+  const el = $("setup");
+  el.hidden = false;
+  el.innerHTML = `
+    <summary>Avant de publier cette page <span class="count">${done}/${checks.length}</span></summary>
+    <div class="setup-body">
+      <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="${checks.length}" aria-valuenow="${done}"><i style="width:${Math.round((done / checks.length) * 100)}%"></i></div>
+      <p>Ce texte est un modèle de départ, pas un avis juridique. Chaque phrase doit être vraie pour votre site. En cas de doute, faites-le relire par une ou un juriste. Remplissez le bloc CONFIG en bas du fichier. Ce panneau disparaît quand tout est rempli.</p>
+      <ul class="checklist">${rows}</ul>
+    </div>`;
+})();
+</script>
+
+</body>
+</html>
